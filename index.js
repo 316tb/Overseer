@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 const bot = new Discord.Client();
 const prefix = "/"
 const version = "5.9"
-const token1 = "Mzc5MzQyMjY3NjQ4ODM1NTg0.DOo2gw.fWHahr3arnKmvPA_yvP2_5Vy2Nc"
-const token2 = "NDA1MzgxNTYxNDEzMDA5NDEw.D0H4wg.bMn45KOK1UBQlCyRRuw7IV3h4V0" 
+const token1 = process.env.token;
+const token2 = process.env.token2;
 const game = `/help`
 const status = "online"/* online, dnd, offline, idle*/
 
