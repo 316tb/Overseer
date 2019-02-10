@@ -382,7 +382,7 @@ bot.on("message", function(message) {
             
             if(!modlog) return message.reply("I've detected that this server doesn't have a mod-log channel.");
             if(message.mentions.users.size < 1) return message.reply("You must mention someone in order to kick them!");
-            if(!reason) return message.reply("Enter a reason for kick.");
+            if(reason.length() == 0) return message.reply("Enter a reason for kick.");
             if(!message.guild.member(user).kickable) return message.reply("I can't kick the owner!");
             
             message.guild.member(user).kick(reason + `You can re-join by going to Error 316; Too MLG by going to https://discordapp.com/invite/ArsJtNd, and then click on the "#partnerships" chat`);
