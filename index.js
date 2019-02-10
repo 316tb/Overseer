@@ -380,9 +380,8 @@ bot.on("message", function(message) {
             let user = message.mentions.users.first();
             let reason = message.content.split(" ").slice(2).join(" ");
             
-            if(!modlog) return message.reply("I've detected that this server doesn't have a mod-log channel.");
             if(message.mentions.users.size < 1) return message.reply("You must mention someone in order to kick them!");
-            if(reason.length() == 0) return message.reply("Enter a reason for kick.");
+            if(!reason) return message.reply("Enter a reason for kick.");
             if(!message.guild.member(user).kickable) return message.reply("I can't kick the owner!");
             
             message.guild.member(user).kick(reason + `You can re-join by going to Error 316; Too MLG by going to https://discordapp.com/invite/ArsJtNd, and then click on the "#partnerships" chat`);
@@ -391,7 +390,7 @@ bot.on("message", function(message) {
             .setAuthor(`${user.username} has been kicked from the server.`, user.displayAvatarURL)
             .addField("Kick information", `**Kicked User:** ${user.tag}\n**Moderator:** ${message.author.tag}\n**Reason:** ${reason}`)
             .setColor(embedRed);
-            msg.channel.send({
+            message.channel.send({
             embed : kickembed
             });
             break;
