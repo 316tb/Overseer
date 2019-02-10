@@ -58,7 +58,7 @@ var fortunes = [
 //bot ready
 bot.on("ready", () => {
     bot.user.setStatus(status)
-    bot.user.setGame(game)
+    bot.user.setActivity(game)
     console.log("Bot Ready For Use")
 })
 
@@ -379,9 +379,9 @@ bot.on("message", function(message) {
             
             let user = message.mentions.users.first();
             let reason = message.content.split(" ").slice(2).join(" ");
-            
+        
             if(message.mentions.users.size < 1) return message.reply("You must mention someone in order to kick them!");
-            if(!reason) return message.reply("Enter a reason for kick.");
+            if(!reason) return message.reply("Please enter a reason for kick.");
             if(!message.guild.member(user).kickable) return message.reply("I can't kick the owner!");
             
             message.guild.member(user).kick(reason + `You can re-join by going to Error 316; Too MLG by going to https://discordapp.com/invite/ArsJtNd, and then click on the "#partnerships" chat`);
@@ -401,9 +401,7 @@ bot.on("message", function(message) {
             
             let user1 = message.mentions.users.first();
             let reason1 = message.content.split(" ").slice(2).join(" ");
-            let modlog1 = bot.channels.get("id", "460130530747219980");
 
-            if(!modlog1) return message.reply("I've detected that this server doesn't have a mod-log channel.");
             if(message.mentions.users.size < 1) return message.reply("You must mention someone in order to ban them!");
             if(!reason1) return message.reply("Enter a reason for ban.");
             if(!message.guild.member(user1).kickable) return message.reply("Error banning member.");
