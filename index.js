@@ -298,26 +298,6 @@ bot.on("message", message => {
     }
 });
 
-//new member
-
-bot.on('guildMemberAdd', member => {
-    // Send the message to a designated channel on a server:
-    let modlog = bot.channels.get("379952859875115008")
-
-    if(!modlog) return;
-    console.log(` >>User ${member.user.username} has joined a server.`);
-    /*message.modlog.send({embed: {
-        color: embedRed,
-        title: `${member} has joined the server!`,
-        description: (``),
-        }});*/
-/////////////////////////////////////////////////////////////////////////////
-    
-    const Member = member.guild.roles.find(`name`, `Member`)
-    const Noob = member.guild.roles.find(`name`, `Noob`)
-    member.addRole(Member);
-    member.addRole(Noob);
-});
 //commands
 
 
@@ -541,7 +521,7 @@ bot.on("message", function(message) {
                 ]
               });
             break;
-        case "p_embed":
+        case "pembed":
             message.channel.send("NULL")
             message.channel.bulkDelete(2);
 
