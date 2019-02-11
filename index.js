@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const prefix = "/"
-const version = "5.9"
+const version = "6.0"
+const memeCount = 22;
 const token1 = process.env.token;
 const token2 = process.env.token2;
 const game = `/help`
@@ -406,13 +407,13 @@ bot.on("message", function(message) {
             if(!reason1) return message.reply("Enter a reason for ban.");
             if(!message.guild.member(user1).kickable) return message.reply("Error banning member.");
             
-            message.guild.member(user1).ban(reason);
+            message.guild.member(user1).ban(reason1);
             
             var banembed = new Discord.RichEmbed()
-            .setAuthor(`${user1.username} has been kicked from the server.`, user1.displayAvatarURL)
-            .addField("Kick information", `**Kicked User:** ${user1.tag}\n**Moderator:** ${message.author.tag}\n**Reason:** ${reason1}`)
+            .setAuthor(`${user1.username} has been banned from the server.`, user1.displayAvatarURL)
+            .addField("Ban information", `**Banned User:** ${user1.tag}\n**Moderator:** ${message.author.tag}\n**Reason:** ${reason1}`)
             .setColor(embedGreen);
-            modlog1.send({
+            message.channel.send({
             embed : banembed
             });
             break;
@@ -533,7 +534,7 @@ bot.on("message", function(message) {
             break;
 
         case "meme":
-            var memeNumber = Math.floor(Math.random() * 22) + 1
+            var memeNumber = Math.floor(Math.random() * memeCount) + 1
             message.channel.send(`Here Is Your Meme!`, {
                 files: [
                 `memes/${memeNumber}.jpg`
