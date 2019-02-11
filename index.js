@@ -547,8 +547,8 @@ bot.on("message", function(message) {
                         icon_url: message.author.avatarURL
                     },
                     color: embedRed,
-                    title: `Completed`,
-                    description: `${message.author.username}, I have sent ${pUser.username} a private embed.\n✅`,
+                    title: `✅ Completed`,
+                    description: `${message.author.username}, I have sent ${pUser.username} a private embed.`,
                 }
             });
             
