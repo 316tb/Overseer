@@ -5,7 +5,11 @@ const version = "6.0"
 const memeCount = 22;
 const token1 = process.env.token;
 const token2 = process.env.token2;
-const game = `Fortnut`
+<<<<<<< HEAD
+const game = `Fortnite`
+=======
+const game = `Fortnite`
+>>>>>>> 36d2d8bce860512642027c9cada112f77bd45afa
 const status = "online"/* online, dnd, offline, idle*/
 
 //embedColors
@@ -298,26 +302,6 @@ bot.on("message", message => {
     }
 });
 
-//new member
-
-bot.on('guildMemberAdd', member => {
-    // Send the message to a designated channel on a server:
-    let modlog = bot.channels.get("379952859875115008")
-
-    if(!modlog) return;
-    console.log(` >>User ${member.user.username} has joined a server.`);
-    /*message.modlog.send({embed: {
-        color: embedRed,
-        title: `${member} has joined the server!`,
-        description: (``),
-        }});*/
-/////////////////////////////////////////////////////////////////////////////
-    
-    const Member = member.guild.roles.find(`name`, `Member`)
-    const Noob = member.guild.roles.find(`name`, `Noob`)
-    member.addRole(Member);
-    member.addRole(Noob);
-});
 //commands
 
 
@@ -541,7 +525,7 @@ bot.on("message", function(message) {
                 ]
               });
             break;
-        case "p_embed":
+        case "pembed":
             message.channel.send("NULL")
             message.channel.bulkDelete(2);
 
@@ -567,8 +551,8 @@ bot.on("message", function(message) {
                         icon_url: message.author.avatarURL
                     },
                     color: embedRed,
-                    title: `Completed`,
-                    description: `${message.author.username}, I have sent ${pUser.username} a private embed.\n✅`,
+                    title: `✅ Completed`,
+                    description: `${message.author.username}, I have sent ${pUser.username} a private embed.`,
                 }
             });
             
