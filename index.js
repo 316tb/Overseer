@@ -5,7 +5,7 @@ const version = "6.0"
 const memeCount = 22;
 const token1 = process.env.token;
 const token2 = process.env.token2;
-const game = `Fortnite`
+const game = `/help`
 const status = "online"/* online, dnd, offline, idle*/
 
 //embedColors
@@ -474,15 +474,15 @@ bot.on("message", function(message) {
             break;
 
         case "overseer":
-            message.channel.sendMessage("Go to https://316thebrains.wixsite.com/home and click `Get Overseer`");
+            message.channel.sendMessage("Go to 316thebrain's official website, https://raw.repl.co/home, and click `Get Overseer`");
             break;
 
         case "dm":
             let person = message.mentions.users.first();
             let msg = message.content.split(" ").slice(2).join(" ");
 
-            if(message.mentions.users.size < 1) return message.reply("Usage: /dm @PLAYER000 I Like Ponies");
-            if(!msg) return message.reply("Usage: /dm @PLAYER000 I Like Ponies");
+            if(message.mentions.users.size < 1) return message.reply("Usage: `/dm @Player#0000 I Like Ponies`");
+            if(!msg) return message.reply("Usage: `/dm @Player#0000 I Like Ponies`");
 
             const customEmbed = new Discord.RichEmbed()
             .setAuthor(`UNKNOWN`, message.author.displayAvatarURL)
