@@ -479,7 +479,7 @@ bot.on("message", function(message) {
             .setAuthor(`Overseer`, bot.user.displayAvatarURL)
             .addField("Go to 316thebrains' official website, https://raw.repl.co/home, and click `Get Overseer`")
             .setColor(embedRed);
-            msg.channel.send({
+            message.channel.send({
                 embed : customEmbed
             });
             break;
