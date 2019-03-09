@@ -474,7 +474,14 @@ bot.on("message", function(message) {
             break;
 
         case "overseer":
-            message.channel.sendMessage("Go to 316thebrain's official website, https://raw.repl.co/home, and click `Get Overseer`");
+            message.channel.sendMessage("Go to 316thebrains' official website, https://raw.repl.co/home, and click `Get Overseer`");
+            const oInviteEmbed = new Discord.RichEmbed()
+            .setAuthor(`Overseer`, bot.user.displayAvatarURL)
+            .addField(`Go to 316thebrains' official website, https://raw.repl.co/home, and click `Get Overseer``)
+            .setColor(embedRed);
+            person.send({
+                embed : customEmbed
+            });
             break;
 
         case "dm":
