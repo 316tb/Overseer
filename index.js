@@ -474,7 +474,6 @@ bot.on("message", function(message) {
             break;
 
         case "overseer":
-            message.channel.sendMessage("Go to 316thebrains' official website, https://raw.repl.co/home, and click `Get Overseer`");
             const oInviteEmbed = new Discord.RichEmbed()
             .setAuthor(`Overseer`, bot.user.displayAvatarURL)
             .addField("Thinking of inviting me to your server?","Go to 316thebrains' official website, https://raw.repl.co/home, and click `Get Overseer`")
