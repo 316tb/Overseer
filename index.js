@@ -5,7 +5,7 @@ const version = "6.0"
 const memeCount = 22;
 const token1 = process.env.token;
 const token2 = process.env.token2;
-const game = `/help`
+const game = `https://raw.repl.co/home || /help`
 const status = "online"/* online, dnd, offline, idle*/
 
 //embedColors
