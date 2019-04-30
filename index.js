@@ -1,11 +1,11 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const prefix = "/"
-const version = "6.5"
+const version = "6.8"
 const memeCount = 22;
 const token1 = process.env.token;
 const token2 = process.env.token2;
-const game = `/help | https://raw.repl.co/home`
+const game = `/help for a list of Commands || Version ${version}`
 const status = "online"/* online, dnd, offline, idle*/
 
 //embedColors
@@ -453,7 +453,7 @@ bot.on("message", function(message) {
             
             const helpEmbed = new Discord.RichEmbed()
             .setAuthor(`Commands`, bot.user.displayAvatarURL)
-            .addField("--------------------------------------", `**/dm**     dms a player without using your username.\n**/ping**     Pong!\n**/info**     Tells current bot version\n**/8ball**    Ask it a question!\n**/roll**     Rolls a 6 sided die\n**/admin**    Give urshmelf admin priveledges\n**/kick**     Kicks users from the server\n**/ban**      Bans users from the server\n**/copycat**  316thebrains hates me for this...\n**/slap**   Slap dem b#tches!\n**/overseer**  Invite Overseer to your server\n**/report**     Reports a user to the owner\n**/meme**     Generates a random meme\n**/embed**     Creates a custom embed`)
+            .addField("--------------------------------------", `**/dm**     dms a player without using your username.\n**/ping**     Pong!\n**/info**     Tells current bot version\n**/8ball**    Ask it a question!\n**/roll**     Rolls a 6 sided die\n**/admin**    Give urshmelf admin priveledges\n**/kick**     Kicks users from the server\n**/ban**      Bans users from the server\n**/warn**  Warns a user\n**/slap**   Slap dem b#tches!\n**/overseer**  Invite Overseer to your server\n**/report**     Reports a user to the owner\n**/meme**     Generates a random meme\n**/nick** changes the nick name of you or another user.\n**/embed**     Creates a custom embed`)
             .setColor(embedRed);
             member.send({
             embed : helpEmbed
@@ -618,9 +618,12 @@ bot.on("message", function(message) {
               let heading1 = message.content.split(" ").slice(2).join(" ").split(" ").slice(1).join(" ").split("!@");
               let body1 = message.content.split("!@").slice(1).join(" ");
 
-              if (heading1 == [ '' ] || body1 == [ '' ]){
-                  message.reply("Correct Syntax:\n`/warn @User#1234 <Title>!@<BodyText>`");
+              if (heading1 == [ '' ]){
+                  message.reply("Correct Syntax:\n`/warn @User#1234 (Reason)!@[Extra]`");
                   break;
+              }
+              if (body1 == [ '' ]){
+                  body1 = [ '' ];   
               }
                 embedUser.send({
                     embed: {
@@ -707,9 +710,14 @@ bot.on("message", function(message) {
                     description: `${interger} = ${answer}`,
                     }});
             break;
-        case "voteban":
+        /*case "nick":
+            let usernameToChange = message.mentions.users.first();
+            let nickName = message.content.split(" ").slice(2).join(" ")
             
-            break;
+            if (!message.guild.member(message.author).hasPermission("CHANGE_NICKNAME")) return;
+            if (!message.guild.member(message.author).hasPermission("MANAGE_NICKNAME")
+            
+            break;*/
         case "report":
                 var owner = message.guild.owner;
                 var rUser = message.mentions.users.first();
