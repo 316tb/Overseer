@@ -5,7 +5,7 @@ const version = "6.8"
 const memeCount = 22;
 const token1 = process.env.token;
 const token2 = process.env.token2;
-const game = `/help for a list of Commands || Version ${version}`
+const game = `/help || Version - ${version}`
 const status = "online"/* online, dnd, offline, idle*/
 
 //embedColors
