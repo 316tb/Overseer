@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const prefix = "/"
-const version = "6.8"
+const version = "6.9"
 const memeCount = 22;
 const token1 = process.env.token;
 const token2 = process.env.token2;
