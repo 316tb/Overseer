@@ -5,7 +5,7 @@ const version = "6.8"
 const memeCount = 22;
 const token1 = process.env.token;
 const token2 = process.env.token2;
-const game = `Version - ${version} || /help`
+const game = `/help || Version - ${version}`
 const status = "online"/* online, dnd, offline, idle*/
 
 //embedColors
@@ -440,14 +440,14 @@ bot.on("message", function(message) {
                 description: "(Version " + version + ")",
             }});
             break;
-        case "invite":
+        /*case "invite":
             message.channel.send({embed: {
                     color: embedMagenta,
-                    title: "Thinking of inviting someone to The Talkers V2?",
+                    title: `Thinking of inviting someone to this server? ${bot.guilds.get(message.author).id}`,
                     description: "Send them the following link to have them join! https://discord.gg/Z386W5R",
                     }});
                     break;
-
+        */
         case "help":
             let member = message.author;
             
@@ -476,7 +476,7 @@ bot.on("message", function(message) {
         case "overseer":
             const oInviteEmbed = new Discord.RichEmbed()
             .setAuthor(`Overseer`, bot.user.displayAvatarURL)
-            .addField("Thinking of inviting me to your server?","Go to 316thebrains' official website, https://raw.repl.co/home, and click `Get Overseer`")
+            .addField("Thinking of inviting me to your server?","Go to http://tinyw.in/H7rj")
             .setColor(embedRed);
             message.channel.send({
                 embed : oInviteEmbed
@@ -710,14 +710,34 @@ bot.on("message", function(message) {
                     description: `${interger} = ${answer}`,
                     }});
             break;
-        /*case "nick":
-            let usernameToChange = message.mentions.users.first();
+        case "nick":
+            let userToNick = message.mentions.users.first();
             let nickName = message.content.split(" ").slice(2).join(" ")
             
             if (!message.guild.member(message.author).hasPermission("CHANGE_NICKNAME")) return;
-            if (!message.guild.member(message.author).hasPermission("MANAGE_NICKNAME")
+            if (!message.guild.member(message.author).hasPermission("MANAGE_NICKNAMES")){
+                userToNick = message.author; 
+            };
             
-            break;*/
+            if (message.mentions.users.size < 1){
+                userToNick = message.author;
+                nickName = message.content.split(" ").slice(1).join(" ");  
+            }
+            
+            message.guild.member(userToNick).setNickname(nickName);
+            send({
+                    embed: {
+                        author: {
+                            name: message.author.username,
+                            icon_url: message.author.avatarURL
+                        },
+                        color: embedRed,
+                        title: `:white_check_mark: Changed ${userToNick.username}'s Nickname`,
+                        description: (`I have changed ${userToNick.username}'s nickname to ${nickName}`)
+                    }
+                });
+            
+            break;
         case "report":
                 var owner = message.guild.owner;
                 var rUser = message.mentions.users.first();
