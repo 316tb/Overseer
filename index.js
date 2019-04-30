@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const prefix = "/"
-const version = "6.9"
+const version = "7.0"
 const memeCount = 22;
 const token1 = process.env.token;
 const token2 = process.env.token2;
@@ -710,7 +710,7 @@ bot.on("message", function(message) {
                     description: `${interger} = ${answer}`,
                     }});
             break;
-        case "nick":
+        case "nickname":
             let userToNick = message.mentions.users.first();
             let nickName = message.content.split(" ").slice(2).join(" ")
             
