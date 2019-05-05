@@ -476,7 +476,7 @@ bot.on("message", function(message) {
         case "overseer":
             const oInviteEmbed = new Discord.RichEmbed()
             .setAuthor(`Overseer`, bot.user.displayAvatarURL)
-            .addField("Thinking of inviting me to your server?","Go to https://raw.316tb.net/ and click `Get Overseer")
+            .addField("Thinking of inviting me to your server?","Go to https://raw.316tb.net/ and click `Get Overseer`")
             .setColor(embedRed);
             message.channel.send({
                 embed : oInviteEmbed
