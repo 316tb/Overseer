@@ -476,7 +476,7 @@ bot.on("message", function(message) {
         case "overseer":
             const oInviteEmbed = new Discord.RichEmbed()
             .setAuthor(`Overseer`, bot.user.displayAvatarURL)
-            .addField("Thinking of inviting me to your server?","Go to http://tinyw.in/H7rj")
+            .addField("Thinking of inviting me to your server?","Go to https://raw.316tb.net/ and click `Get Overseer")
             .setColor(embedRed);
             message.channel.send({
                 embed : oInviteEmbed
@@ -618,6 +618,10 @@ bot.on("message", function(message) {
               let heading1 = message.content.split(" ").slice(2).join(" ").split(" ").slice(1).join(" ").split("!@");
               let body1 = message.content.split("!@").slice(1).join(" ");
 
+              if(!message.guild.member(message.author).hasPermission("KICK_MEMBERS")) return message.reply("It appears you don't have permission to do this.")
+              if(!message.guild.member(bot.user).hasPermission("KICK_MEMBERS")) return message.reply("It appears I don't have permission to do this.")
+    
+            
               if (heading1 == [ '' ]){
                   message.reply("Correct Syntax:\n`/warn @User#1234 (Reason)!@[Extra]`");
                   break;
