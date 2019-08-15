@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const prefix = "/"
-const version = "7.0"
+const version = "7.1"
 const memeCount = 22;
 const token1 = process.env.token;
 const token2 = process.env.token2;
@@ -453,7 +453,7 @@ bot.on("message", function(message) {
             
             const helpEmbed = new Discord.RichEmbed()
             .setAuthor(`Commands`, bot.user.displayAvatarURL)
-            .addField("--------------------------------------", `**/dm**     dms a player without using your username.\n**/ping**     Pong!\n**/info**     Tells current bot version\n**/8ball**    Ask it a question!\n**/roll**     Rolls a 6 sided die\n**/admin**    Give urshmelf admin priveledges\n**/kick**     Kicks users from the server\n**/ban**      Bans users from the server\n**/warn**  Warns a user\n**/slap**   Slap dem b#tches!\n**/overseer**  Invite Overseer to your server\n**/report**     Reports a user to the owner\n**/meme**     Generates a random meme\n**/nick** changes the nick name of you or another user.\n**/embed**     Creates a custom embed`)
+            .addField("--------------------------------------", `**/dm**     dms a player without using your username.\n**/ping**     Pong!\n**/info**     Tells current bot version\n**/8ball**    Ask it a question!\n**/roll**     Rolls a 6 sided die\n**/admin**    Give urshmelf admin priveledges\n**/kick**     Kicks users from the server\n**/ban**      Bans users from the server\n**/warn**  Warns a user\n**/slap**   Slap dem b#tches!\n**/overseer**  Invite Overseer to your server\n**/report**     Reports a user to the owner\n**/meme**     Generates a random meme\n**/nick** changes the nick name of you or another user.\n**/embed**     Creates a custom embed [\`/embed title!@description\`]\n**/vote**     Start a public Yes/No poll.`)
             .setColor(embedRed);
             member.send({
             embed : helpEmbed
