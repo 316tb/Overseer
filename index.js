@@ -7,10 +7,10 @@ const token1 = process.env.token;
 const token2 = process.env.token2;
 const game = `/help || Version - ${version}`
 const status = "online"/* online, dnd, offline, idle*/
-const devList = [
+/*const devList = [
     bot.fetchUser(338825657436078091),
     bot.fetchUser(320666534932643840)
-]
+]*/
 
 //embedColors
 
