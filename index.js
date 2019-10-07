@@ -1,15 +1,15 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const prefix = "/"
-const version = "7.1"
+const version = "7.2"
 const memeCount = 22;
 const token1 = process.env.token;
 const token2 = process.env.token2;
 const game = `/help || Version - ${version}`
 const status = "online"/* online, dnd, offline, idle*/
 const devList = [
-    client.fetchUser(338825657436078091),
-    client.fetchUser(320666534932643840)
+    bot.fetchUser(338825657436078091),
+    bot.fetchUser(320666534932643840)
 ]
 
 //embedColors
@@ -516,8 +516,10 @@ bot.on("message", function(message) {
             break;
         case "echo":
             if (!devList.contains(message.author)) return message.reply("Sorry but this is a **Developer Only** command!");
+            
             let message_content = message.content.split(" ").slice(1).join(" ");
             message.channel.send(message_content)
+            
             break;
             
         case "spiton":
