@@ -515,7 +515,7 @@ bot.on("message", function(message) {
             yeet.addRole(Punished).catch(console.error);
             break;
         case "echo":
-            if (message.guild.member(message.author).hasPermission("ADMINISTRATOR")) return;
+            if(!message.guild.member(message.author).hasPermission("ADMINISTRATOR")) return;
             
             let message_content = message.content.split(" ").slice(1).join(" ");
             message.channel.send(message_content)
