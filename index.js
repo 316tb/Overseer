@@ -515,7 +515,7 @@ bot.on("message", function(message) {
             yeet.addRole(Punished).catch(console.error);
             break;
         case "echo":
-            if (!devList.contains(message.author)) return message.reply("Sorry but this is a **Developer Only** command!");
+            if (!devList.includes(message.author)) return message.reply("Sorry but this is a **Developer Only** command!");
             
             let message_content = message.content.split(" ").slice(1).join(" ");
             message.channel.send(message_content)
