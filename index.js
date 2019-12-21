@@ -1,11 +1,11 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
-const prefix = "/"
-const version = "7.2"
+const prefix = ">"
+const version = "8.0"
 const memeCount = 22;
 const token1 = process.env.token;
 const token2 = process.env.token2;
-const game = `/help || Version - ${version}`
+const game = `${prefix}help || Version - ${version}`
 const status = "online"/* online, dnd, offline, idle*/
 /*const devList = [
     bot.fetchUser(338825657436078091),
@@ -59,6 +59,12 @@ var fortunes = [
     "Outlook not so good...",
     "Very doubtful.",
 ];
+
+
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+};
 
 //bot ready
 bot.on("ready", () => {
@@ -426,6 +432,39 @@ bot.on("message", function(message) {
             }, 50);
             break;
 
+        case "wrd":
+
+          let syntax = message.content.split(" ").slice(1).join(" ");
+
+          var parsedEquation = encodeURIComponent(equation.replaceAll("^","**"));
+
+          if (!parsedEquation.includes("=")){
+            parsedEquation = parsedEquation + "=x"
+          }
+
+          var result = null;
+          var scriptUrl = `https://wrdapi--raw.repl.co/api/solveAlg?equation=${parsedEquation}`;
+          $.ajax({
+            url: scriptUrl,
+            type: 'get',
+            dataType: 'html',
+            async: false,
+            success: function(data) {
+                result = data;
+            } 
+          });
+          
+          message.channel.send(JSON.parse(result.replaceAll("'", '"')).Response)
+
+          new Discord.RichEmbed()
+            .setAuthor(`WRD`, bot.user.displayAvatarURL)
+            .addField(`${syntax}`)
+            .setColor(embedRed);
+            member.send({
+            embed : helpEmbed
+          });
+          break;
+
         case"update":
             function resetBot(channel) {
                 // send channel a message that you're resetting bot [optional]
@@ -457,7 +496,7 @@ bot.on("message", function(message) {
             
             const helpEmbed = new Discord.RichEmbed()
             .setAuthor(`Commands`, bot.user.displayAvatarURL)
-            .addField("--------------------------------------", `**/dm**     dms a player without using your username. [\`/dm @User#1234 Message Body\`]\n**/ping**     Pong!\n**/info**     Tells current bot version\n**/8ball**    Ask it a question! [\`/8ball Question\`]\n**/roll**     Rolls a 6 sided die\n**/admin**    Give urshmelf admin priveledges\n**/kick**     Kicks users from the server [\`/kick @User#1234 Reason\`]\n**/ban**      Bans users from the server [\`/ban @User#1234 Reason\`]\n**/warn**  Warns a user [\`/warn @User#1234 reason\`]\n**/slap**   Slap dem b#tches! [\`/slap @User#1234\`]\n**/overseer**  Invite Overseer to your server\n**/report**     Reports a user to the owner [\`/report @User#1234 Reason For Report\`]\n**/meme**     Generates a random meme\n**/embed**     Creates a custom embed [\`/embed title!@description\`]\n**/vote**     Start a public Yes/No poll.`)
+            .addField("--------------------------------------", `**/dm** DMs a player without using your username. [\`/dm @User#1234 Message Body\`]\n**/ping** Pong!\n**/info** Tells current bot version\n**/8ball** Ask me a question! [\`/8ball Question\`]\n**/roll** Rolls a 6 sided die\n**/admin** Give urshmelf admin priveledges\n**/kick**     Kicks users from the server [\`/kick @User#1234 Reason\`]\n**/ban** Bans users from the server [\`/ban @User#1234 Reason\`]\n**/warn** Warns a user [\`/warn @User#1234 reason\`]\n**/slap**   Slap dem b#tches! [\`/slap @User#1234\`]\n**/invite** Invite Overseer to your server\n**/report** Reports a user to the owner [\`/report @User#1234 Reason For Report\`]\n**/meme** Generates a random meme\n**/embed** Creates a custom embed [\`/embed title!@description\`]\n**/vote** Start a public Yes/No poll. [\`/vote title!@description\`]\n**/wrd** do some math using the WolframDelta API [\`/wrd (WolframDelta  syntax)\`]`)
             .setColor(embedRed);
             member.send({
             embed : helpEmbed
@@ -477,10 +516,10 @@ bot.on("message", function(message) {
             //if(slappedUser)
             break;
 
-        case "overseer":
+        case "invite":
             const oInviteEmbed = new Discord.RichEmbed()
             .setAuthor(`Overseer`, bot.user.displayAvatarURL)
-            .addField("Thinking of inviting me to your server?","Go to https://raw.316tb.net/ and click `Get Overseer`")
+            .addField("Thinking of inviting me to your server?","Go to https://www.316tb.net/ and click `Get Overseer`")
             .setColor(embedRed);
             message.channel.send({
                 embed : oInviteEmbed
