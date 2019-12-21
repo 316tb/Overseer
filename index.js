@@ -456,7 +456,7 @@ bot.on("message", function(message) {
             });
           });
           
-          message.channel.send(JSON.parse(result.replaceAll("'", '"')).Response)
+          message.channel.send(JSON.parse(result/*.replaceAll("'", '"')*/).Response)
 
           new Discord.RichEmbed()
             .setAuthor(`WolframDelta`, `http://wrd.316tb.net/assets/images/icon.png`)
