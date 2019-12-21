@@ -434,9 +434,11 @@ bot.on("message", function(message) {
 
         case "wrd":
 
+          console.log(bot.user.displayAvatarURL)
+
           let syntax = message.content.split(" ").slice(1).join(" ");
 
-          var parsedEquation = encodeURIComponent(equation.replaceAll("^","**"));
+          var parsedEquation = encodeURIComponent(syntax.replaceAll("^","**"));
 
           if (!parsedEquation.includes("=")){
             parsedEquation = parsedEquation + "=x"
@@ -457,7 +459,7 @@ bot.on("message", function(message) {
           message.channel.send(JSON.parse(result.replaceAll("'", '"')).Response)
 
           new Discord.RichEmbed()
-            .setAuthor(`WRD`, bot.user.displayAvatarURL)
+            .setAuthor(`WolframDelta`, bot.user.displayAvatarURL)
             .addField(`${syntax}`)
             .setColor(embedRed);
             member.send({
