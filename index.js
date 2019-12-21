@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
+const https = require('https');
 const prefix = ">"
 const version = "8.0"
 const memeCount = 22;
@@ -446,7 +447,7 @@ bot.on("message", function(message) {
 
           var result = null;
           var scriptUrl = `https://wrdapi--raw.repl.co/api/solveAlg?equation=${parsedEquation}`;
-          $.ajax({
+          https.get(({
             url: scriptUrl,
             type: 'get',
             dataType: 'html',
@@ -459,7 +460,7 @@ bot.on("message", function(message) {
           message.channel.send(JSON.parse(result.replaceAll("'", '"')).Response)
 
           new Discord.RichEmbed()
-            .setAuthor(`WolframDelta`, bot.user.displayAvatarURL)
+            .setAuthor(`WolframDelta`, `http://wrd.316tb.net/assets/images/icon.png`)
             .addField(`${syntax}`)
             .setColor(embedRed);
             member.send({
