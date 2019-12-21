@@ -447,14 +447,20 @@ bot.on("message", function(message) {
 
           var result = null;
           var scriptUrl = `https://wrdapi--raw.repl.co/api/solveAlg?equation=${parsedEquation}`;
-          https.get(scriptUrl, (res) => {
-            console.log('statusCode:', res.statusCode);
-            console.log('headers:', res.headers);
+          var options = {
+            hostname: 'wrdapi.raw.repl.co',
+            path: `/api/solveAlg?equation=${parsedEquation}`,
+            method: 'GET'
+          }
 
-            res.on('data', (d) => {
+          const req = https.request(options, res => {
+            console.log(`statusCode: ${res.statusCode}`)
+
+            res.on('data', d => {
+              console.log(d)
               result = d
-            });
-          });
+            })
+          })
 
           console.log(result)
           
