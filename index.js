@@ -447,14 +447,13 @@ bot.on("message", function(message) {
 
           var result = null;
           var scriptUrl = `https://wrdapi--raw.repl.co/api/solveAlg?equation=${parsedEquation}`;
-          https.get(({
-            url: scriptUrl,
-            type: 'get',
-            dataType: 'html',
-            async: false,
-            success: function(data) {
-                result = data;
-            } 
+          https.get(scriptUrl, (res) => {
+            console.log('statusCode:', res.statusCode);
+            console.log('headers:', res.headers);
+
+            res.on('data', (d) => {
+              result = d
+            });
           });
           
           message.channel.send(JSON.parse(result.replaceAll("'", '"')).Response)
