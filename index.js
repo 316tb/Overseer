@@ -455,6 +455,8 @@ bot.on("message", function(message) {
               result = d
             });
           });
+
+          console.log(result)
           
           message.channel.send(JSON.parse(result/*.replaceAll("'", '"')*/).Response)
 
