@@ -13,6 +13,7 @@
     "@google-cloud/speech": "^3.5.3",
     "artyom.js": "^1.0.6",
     "discord.js": "^11.5.1",
+    "discord.js-commando": "^0.10.0",
     "ffbinaries": "^1.1.4",
     "ffmpeg": "0.0.4",
     "googleapis": "^46.0.0",

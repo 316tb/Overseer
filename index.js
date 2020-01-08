@@ -3,9 +3,9 @@ const bot = new Discord.Client();
 const https = require('https');
 const snekfetch = require("snekfetch")
 const prefix = ">"
-const version = "8.0.2"
+const version = "8.1.0"
 const memeCount = 22;
-const token1 = "Mzc5MzQyMjY3NjQ4ODM1NTg0.XhNtkw.r6TOvpW58zo6z3ltcW1Ws1_Kkdg";
+const token1 = "Mzc5MzQyMjY3NjQ4ODM1NTg0.XhZWcQ.U6OiSOmrQPFfpH8oSgK6plBhmuk";
 const game = `${prefix}help || Version - ${version}`
 const status = "online"/* online, dnd, offline, idle*/
 /*const devList = [
@@ -26,6 +26,33 @@ const embedPink = 0xff00ff
 const embedBlack = 0x000000
 const embedWhite = 0xffffff
 const embedGray = 0x777777
+
+var help = [(`
+--------------------------------------
+**>dm** DMs a player without using your username. [\`>dm @User#1234 Message Body\`]
+**>ping** Pong!
+**>info** Tells current bot version
+**>kick** Kicks a user from the server [\`>kick @User#1234 Reason\`]
+**>ban** Bans a user from the server [\`>ban @User#1234 Reason\`]
+**>warn** Warns a user [\`>warn @User#1234 reason\`]
+**>invite** Invite Overseer to your server
+**>report** Reports a user to the owner [\`>report @User#1234 Reason For Report\`]
+**>help** Displays this message
+**>embed** Creates a custom embed [\`>embed title!@description\`]
+**>wrd** do some math using the WolframDelta API [\`>wrd (WolframDelta  syntax)\`]
+
+
+`),(`
+--------------------------------------
+**>8ball** Ask me a question! [\`>8ball Question\`]
+**>roll** Rolls a 6 sided die
+**>admin** Give urshmelf admin priveledges
+**>slap** Slap dem b#tches! [\`>slap @User#1234\`]
+**>meme** Fetches a reddit post from either r/Memes_Of_The_Dank or r/okbuddyretard
+**>cringe** Fetches a reddit post from either r/MakeMeSuffer or r/Cringetopoia
+**>strange** Fetches a reddit post from either r/cursedimages or r/bl
+**>vote** Start a public Yes/No poll. [\`>vote title!@description\`]
+`)]
 
 var x = [
     1,
@@ -69,8 +96,12 @@ var subs = [
 
 var imgsubs = [
     "blursedimages",
-    "MakeMeSuffer",
     "cursedimages"
+]
+
+var crngsubs = [
+  "MakeMeSuffer",
+  "Cringetopoia"
 ]
 
 String.prototype.replaceAll = function(search, replacement) {
@@ -323,7 +354,7 @@ bot.on("message", message => {
 //commands
 
 
-bot.on("message", async (message) => {
+bot.on("message", async(message) => {
     if (message.author.equals(bot.user)) return;
 
     if (!message.content.startsWith(prefix)) return;
@@ -516,8 +547,9 @@ bot.on("message", async (message) => {
             let member = message.author;
             
             const helpEmbed = new Discord.RichEmbed()
-            .setAuthor(`Commands`, bot.user.displayAvatarURL)
-            .addField("--------------------------------------", `**/dm** DMs a player without using your username. [\`/dm @User#1234 Message Body\`]\n**/ping** Pong!\n**/info** Tells current bot version\n**/8ball** Ask me a question! [\`/8ball Question\`]\n**/roll** Rolls a 6 sided die\n**/admin** Give urshmelf admin priveledges\n**/kick**     Kicks users from the server [\`/kick @User#1234 Reason\`]\n**/ban** Bans users from the server [\`/ban @User#1234 Reason\`]\n**/warn** Warns a user [\`/warn @User#1234 reason\`]\n**/slap**   Slap dem b#tches! [\`/slap @User#1234\`]\n**/invite** Invite Overseer to your server\n**/report** Reports a user to the owner [\`/report @User#1234 Reason For Report\`]\n**/meme** Generates a random meme\n**/embed** Creates a custom embed [\`/embed title!@description\`]\n**/vote** Start a public Yes/No poll. [\`/vote title!@description\`]\n**/wrd** do some math using the WolframDelta API [\`/wrd (WolframDelta  syntax)\`]`)
+            .setAuthor(`All Commands`, bot.user.displayAvatarURL)
+            .addField("**General**", help[0])
+            .addField("**Fun**", help[1])
             .setColor(embedRed);
             member.send({
             embed : helpEmbed
@@ -589,7 +621,7 @@ bot.on("message", async (message) => {
 
         case "meme":
             try {
-                const subchoice = Math.floor(Math.random() * subs.length) - 1
+                const subchoice = Math.floor(Math.random() * subs.length)
                 let subicon = "null"
                 switch (subs[subchoice]) {
                     case "okbuddyretard":
@@ -607,7 +639,7 @@ bot.on("message", async (message) => {
                     .get(`https://www.reddit.com/r/${subs[subchoice]}.json?sort=top&t=week`)
                     .query({ limit: 800 });
                 const allowed = message.channel.nsfw ? body.data.children : body.data.children.filter(post => !post.data.over_18);
-                if (!allowed.length) return message.channel.send('It seems we are out of fresh memes!, Try again later.');
+                if (!allowed.length) return message.channel.send("Sh*t. It seems Im fresh out of spicy memes. Idk, maybe I'll be getting another shipment soon...");
                 const randomnumber = Math.floor(Math.random() * allowed.length)
                 const embed = new Discord.RichEmbed()
                 .setColor(embedRed)
@@ -622,17 +654,17 @@ bot.on("message", async (message) => {
 
             break;
 
-        case "cursed":
+        case "strange":
             try {
-                const subchoice = Math.floor(Math.random() * imgsubs.length) - 1
+                const subchoice = Math.floor(Math.random() * imgsubs.length)
                 let imgsubicon = "null"
                 switch (imgsubs[subchoice]) {
-                    case "okbuddyretard":
-                        imgsubicon = "https://styles.redditmedia.com/t5_74is2/styles/communityIcon_7s6ixw6m34w31.png"
+                    case "blursedimages":
+                        imgsubicon = "https://styles.redditmedia.com/t5_j34kt/styles/communityIcon_ear10u0yhrq31.png"
                         break;
                     
-                    case "Memes_Of_The_Dank":
-                        imgsubicon = "https://styles.redditmedia.com/t5_3hd4p/styles/communityIcon_dn83312v22w01.png"
+                    case "cursedimages":
+                        imgsubicon = "https://b.thumbs.redditmedia.com/idkL6xlYE_o3eBCL0Dz7V7UjrwzYWr-qw4KfKjTLtGg.png"
                         break;
 
                     default:
@@ -642,14 +674,49 @@ bot.on("message", async (message) => {
                     .get(`https://www.reddit.com/r/${imgsubs[subchoice]}.json?sort=top&t=week`)
                     .query({ limit: 800 });
                 const allowed = message.channel.nsfw ? body.data.children : body.data.children.filter(post => !post.data.over_18);
-                if (!allowed.length) return message.channel.send('It seems we are out of fresh memes!, Try again later.');
+                if (!allowed.length) return message.channel.send("Son of a - ... looks like I forgot to restock on my srange image supply :nervous:... you should ***definetly*** check in with me later to remind me or something ");
                 const randomnumber = Math.floor(Math.random() * allowed.length)
                 const embed = new Discord.RichEmbed()
                 .setColor(embedRed)
                 .setAuthor(`r/${imgsubs[subchoice]}`, imgsubicon)
                 .setTitle(allowed[randomnumber].data.title)
                 .setImage(allowed[randomnumber].data.url)
-                .setFooter("Memes provided by: \nr/okbuddyretard & r/Memes_Of_The_Dank")
+                .setFooter("Images provided by: \nr/cursedimages & r/blursedimages")
+                message.channel.send(embed)
+            } catch (err) {
+                return console.log(err);
+            }
+
+            break;
+
+        case "cringe":
+            try {
+                const subchoice = Math.floor(Math.random() * crngsubs.length)
+                let crngsubicon = "null"
+                switch (crngsubs[subchoice]) {
+                    case "MakeMeSuffer":
+                        crngsubicon = "https://styles.redditmedia.com/t5_mf29x/styles/communityIcon_zzp1yfj234841.png"
+                        break;
+                    
+                    case "Cringetopoia":
+                        crngsubicon = "https://styles.redditmedia.com/t5_ovfhp/styles/communityIcon_p8mos2ouyr221.png"
+                        break;
+
+                    default:
+                        return;
+                }
+                const { body } = await snekfetch
+                    .get(`https://www.reddit.com/r/${crngsubs[subchoice]}.json?sort=top&t=week`)
+                    .query({ limit: 800 });
+                const allowed = message.channel.nsfw ? body.data.children : body.data.children.filter(post => !post.data.over_18);
+                if (!allowed.length) return message.channel.send('**Epic Bruh Moment.** Huh, somehow I managed to run out of cringe material. I mean, if you still *really* want some you could go check out r/furry yourself!');
+                const randomnumber = Math.floor(Math.random() * allowed.length)
+                const embed = new Discord.RichEmbed()
+                .setColor(embedRed)
+                .setAuthor(`r/${crngsubs[subchoice]}`, crngsubicon)
+                .setTitle(allowed[randomnumber].data.title)
+                .setImage(allowed[randomnumber].data.url)
+                .setFooter("Images provided by: \nr/MakeMeSuffer & r/Cringetopoia")
                 message.channel.send(embed)
             } catch (err) {
                 return console.log(err);
