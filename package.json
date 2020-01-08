@@ -1,18 +1,25 @@
 {
-  "name": "mydiscordbot",
-  "version": "1.0.0",
+  "name": "Overseer",
+  "version": "8.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aes-js": "^3.1.2",
-    "discord.js": "^11.2.1",
-    "discord.js-commando": "^0.9.0",
-    "sqlite": "^2.2.0",
-    "uws": "^0.14.5"
+    "@google-cloud/speech": "^3.5.3",
+    "artyom.js": "^1.0.6",
+    "discord.js": "^11.5.1",
+    "ffbinaries": "^1.1.4",
+    "ffmpeg": "0.0.4",
+    "googleapis": "^46.0.0",
+    "node-fetch": "^2.6.0",
+    "node-opus": "^0.3.3",
+    "random-puppy": "^1.1.0",
+    "snekfetch": "^4.0.4",
+    "ytdl-core": "^1.0.6"
   }
 }

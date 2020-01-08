@@ -1,11 +1,11 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const https = require('https');
+const snekfetch = require("snekfetch")
 const prefix = ">"
-const version = "8.0"
+const version = "8.0.2"
 const memeCount = 22;
-const token1 = process.env.token;
-const token2 = process.env.token2;
+const token1 = "Mzc5MzQyMjY3NjQ4ODM1NTg0.XhNtkw.r6TOvpW58zo6z3ltcW1Ws1_Kkdg";
 const game = `${prefix}help || Version - ${version}`
 const status = "online"/* online, dnd, offline, idle*/
 /*const devList = [
@@ -61,6 +61,17 @@ var fortunes = [
     "Very doubtful.",
 ];
 
+
+var subs = [
+    "okbuddyretard",
+    "Memes_Of_The_Dank"
+]
+
+var imgsubs = [
+    "blursedimages",
+    "MakeMeSuffer",
+    "cursedimages"
+]
 
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
@@ -312,7 +323,7 @@ bot.on("message", message => {
 //commands
 
 
-bot.on("message", function(message) {
+bot.on("message", async (message) => {
     if (message.author.equals(bot.user)) return;
 
     if (!message.content.startsWith(prefix)) return;
@@ -577,13 +588,75 @@ bot.on("message", function(message) {
             break;
 
         case "meme":
-            var memeNumber = Math.floor(Math.random() * memeCount) + 1
-            message.channel.send(`Here Is Your Meme!`, {
-                files: [
-                `memes/${memeNumber}.jpg`
-                ]
-              });
+            try {
+                const subchoice = Math.floor(Math.random() * subs.length) - 1
+                let subicon = "null"
+                switch (subs[subchoice]) {
+                    case "okbuddyretard":
+                        subicon = "https://styles.redditmedia.com/t5_74is2/styles/communityIcon_7s6ixw6m34w31.png"
+                        break;
+                    
+                    case "Memes_Of_The_Dank":
+                        subicon = "https://styles.redditmedia.com/t5_3hd4p/styles/communityIcon_dn83312v22w01.png"
+                        break;
+
+                    default:
+                        return;
+                }
+                const { body } = await snekfetch
+                    .get(`https://www.reddit.com/r/${subs[subchoice]}.json?sort=top&t=week`)
+                    .query({ limit: 800 });
+                const allowed = message.channel.nsfw ? body.data.children : body.data.children.filter(post => !post.data.over_18);
+                if (!allowed.length) return message.channel.send('It seems we are out of fresh memes!, Try again later.');
+                const randomnumber = Math.floor(Math.random() * allowed.length)
+                const embed = new Discord.RichEmbed()
+                .setColor(embedRed)
+                .setAuthor(`r/${subs[subchoice]}`, subicon)
+                .setTitle(allowed[randomnumber].data.title)
+                .setImage(allowed[randomnumber].data.url)
+                .setFooter("Memes provided by: \nr/okbuddyretard & r/Memes_Of_The_Dank")
+                message.channel.send(embed)
+            } catch (err) {
+                return console.log(err);
+            }
+
             break;
+
+        case "cursed":
+            try {
+                const subchoice = Math.floor(Math.random() * imgsubs.length) - 1
+                let imgsubicon = "null"
+                switch (imgsubs[subchoice]) {
+                    case "okbuddyretard":
+                        imgsubicon = "https://styles.redditmedia.com/t5_74is2/styles/communityIcon_7s6ixw6m34w31.png"
+                        break;
+                    
+                    case "Memes_Of_The_Dank":
+                        imgsubicon = "https://styles.redditmedia.com/t5_3hd4p/styles/communityIcon_dn83312v22w01.png"
+                        break;
+
+                    default:
+                        return;
+                }
+                const { body } = await snekfetch
+                    .get(`https://www.reddit.com/r/${imgsubs[subchoice]}.json?sort=top&t=week`)
+                    .query({ limit: 800 });
+                const allowed = message.channel.nsfw ? body.data.children : body.data.children.filter(post => !post.data.over_18);
+                if (!allowed.length) return message.channel.send('It seems we are out of fresh memes!, Try again later.');
+                const randomnumber = Math.floor(Math.random() * allowed.length)
+                const embed = new Discord.RichEmbed()
+                .setColor(embedRed)
+                .setAuthor(`r/${imgsubs[subchoice]}`, imgsubicon)
+                .setTitle(allowed[randomnumber].data.title)
+                .setImage(allowed[randomnumber].data.url)
+                .setFooter("Memes provided by: \nr/okbuddyretard & r/Memes_Of_The_Dank")
+                message.channel.send(embed)
+            } catch (err) {
+                return console.log(err);
+            }
+
+            break;
+
         case "pembed":
             message.channel.send("NULL")
             message.channel.bulkDelete(2);
@@ -663,7 +736,7 @@ bot.on("message", function(message) {
                 }).then(function (message) {
                     message.react("👎");
                     message.react("👍");
-                  }).catch(function() {
+                  }).catch( async () => {
                     //Something
                    });
             break;
@@ -709,97 +782,11 @@ bot.on("message", function(message) {
                     }
                 }).then(function (message) {
                     message.react("✅")
-                  }).catch(function() {
+                  }).catch( async () => {
                     //Something
                    });
               break; 
-           
-        case "code":
-            let language = message.content.split(" ").slice(1).join(" ").split("!@").slice(-1).join(" ");
-            let code = message.content.split("!@").slice(1).join(" ");
-            let language2;
-
-            switch(language){
-                case "C#":
-                    language2 = "cs";
-                    break;
-                case "C++":
-                    language2 = "cpp";
-                    break;
-                case "Bash":
-                    language2 = "bash";
-                    break;
-                case "JavaScript":
-                    language2 = "javascript";
-                    break;
-                case "CSS":
-                    language2 = "css";
-                    break;
-                case "Python":
-                    language2 = "py";
-                    break;
-                default:
-                    language2 = language;
-                    break;
-            }
-            message.channel.send({
-                embed: {
-                    author: {
-                        name: message.author.username,
-                        icon_url: message.author.avatarURL
-                    },
-                    color: embedGreen,
-                    title: language,
-                    description: ("```"+language+"\n"+code+"\n```")
-                }
-            })
-            break;
-        case "calculate":
-            var interger = message.content.split(" ").slice(1).join(" ");
-            if(interger.includes('^')){
-                console.log("true")
-                var expCount = interger.split("^").length - 1;
-                for(i = 0; i < parseInt(expCount); i++){
-                    interger = interger.replace('^',"**");
-                }                
-            }
-            else{}
-                console.log(interger);
-                var answer = parseInt(interger);
-                message.channel.send({embed: {
-                    color: embedRed,
-                    title: `${answer}`,
-                    description: `${interger} = ${answer}`,
-                    }});
-            break;
-        case "nickname":
-            let userToNick = message.mentions.users.first();
-            let nickName = message.content.split(" ").slice(2).join(" ")
-            
-            if (!message.guild.member(message.author).hasPermission("CHANGE_NICKNAME")) return;
-            if (!message.guild.member(message.author).hasPermission("MANAGE_NICKNAMES")){
-                userToNick = message.author; 
-            };
-            
-            if (message.mentions.users.size < 1){
-                userToNick = message.author;
-                nickName = message.content.split(" ").slice(1).join(" ");  
-            }
-            
-            message.guild.member(userToNick).setNickname(nickName);
-            send({
-                    embed: {
-                        author: {
-                            name: message.author.username,
-                            icon_url: message.author.avatarURL
-                        },
-                        color: embedRed,
-                        title: `:white_check_mark: Changed ${userToNick.username}'s Nickname`,
-                        description: (`I have changed ${userToNick.username}'s nickname to ${nickName}`)
-                    }
-                });
-            
-            break;
+  
         case "report":
                 var owner = message.guild.owner;
                 var rUser = message.mentions.users.first();
@@ -835,6 +822,8 @@ bot.on("message", function(message) {
             message.channel.sendMessage("You Appear to have typed an invalid command!");
             break;
     }
+}).catch( (err) => {
+    console.log(err)
 });
 
 bot.login(token1);
