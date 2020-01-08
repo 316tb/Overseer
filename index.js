@@ -822,8 +822,6 @@ bot.on("message", async (message) => {
             message.channel.sendMessage("You Appear to have typed an invalid command!");
             break;
     }
-}).catch( (err) => {
-    console.log(err)
 });
 
 bot.login(token1);
