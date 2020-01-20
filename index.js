@@ -1,12 +1,13 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 const https = require('https');
-const snekfetch = require("snekfetch")
-const prefix = ">"
-const version = "8.1.0"
+const snekfetch = require("snekfetch");
+const ms = require("ms");
+const prefix = ">";
+const version = "8.1.0";
 const memeCount = 22;
-const token1 = "Mzc5MzQyMjY3NjQ4ODM1NTg0.XhZWcQ.U6OiSOmrQPFfpH8oSgK6plBhmuk";
-const game = `${prefix}help || Version - ${version}`
+const token1 = "Mzc5MzQyMjY3NjQ4ODM1NTg0.XhZhxw.W1P5iDIfHDLBVVycw1AWMRLAQxo";
+const game = `${prefix}help || Version - ${version}`;
 const status = "online"/* online, dnd, offline, idle*/
 /*const devList = [
     bot.fetchUser(338825657436078091),
@@ -101,7 +102,7 @@ var imgsubs = [
 
 var crngsubs = [
   "MakeMeSuffer",
-  "Cringetopoia"
+  "Cringetopia"
 ]
 
 String.prototype.replaceAll = function(search, replacement) {
@@ -253,103 +254,6 @@ bot.on("ready", () => {
     else{}
 });*/
 
-//basic
-
-bot.on("message", message => {
-
-    if (((message.content).toLowerCase()).includes("who's overseer")){
-        //message.reply("pong")
-        message.channel.sendMessage("Well I'm a bot created by Server Owner, 316thebrains for the purpose of watching over his server whenever he goes AFK. So dont get any ideas.")
-    }
-    else if (message.content.toLowerCase() == "i hate you overseer"){
-        message.channel.sendMessage(`Awwww, Thanks ${message.author}`)
-    }
-    else if (message.content == "Is there anybody online?".toLowerCase() || message.content == "Is there anybody online?" || message.content == "Is anybody online?".toLowerCase() || message.content == "Is anybody online".toLowerCase()){
-        message.channel.sendMessage("I'm online!")
-    } 
-    else if (message.content == "Hey Overseer!" || message.content == "hey Overseer!" || message.content == "hey overseer!" || message.content == "Hey Overseer" || message.content == "hey Overseer" || message.content == "hey overseer"){
-        message.channel.sendMessage("Whats Up?")
-    }
-    else if (message.content == "Where is 316thebrains" || message.content == "Where are the admins" || message.content == "Where is 316thebrains".toLowerCase || message.content == "Where are the admins".toLowerCase || message.content == "Where is 316thebrains?" || message.content == "Where are the admins?" || message.content == "Where is 316thebrains?".toLowerCase || message.content == "Where are the admins?".toLowerCase){
-        message.channel.sendMessage("I'm not sure, but if you have any issues with players im here!")
-    }
-    else if (message.content == "bots.access.overseer.launchProtocal:316,modifiers='12,5,53,30'"){
-        for (i = 0; i < 30; i++) {
-            message.channel.sendMessage("SPAM_SPAM_SPAM_SPAM_SPAM_SPAM_SPAM_SPAM")
-    }}
-    else if (((message.content).toLowerCase()).includes("good one overseer")){
-        message.channel.sendMessage("Thank you, " + message.author);
-    }
-    else if (message.content.toLowerCase() == "hey overseer, send a default_embed"){
-        message.channel.sendMessage("This is an example of an embed.");
-        message.channel.send({embed: {
-            color: 0xf50107,
-            title: `${bot.user.displayAvatarURL} This is an embed.`,
-            description:`Bots use this to display messages seperately from user messages/mentions.`
-            }});
-    }
-    else if (message.content == `bots.access.overseer.makeUser:ADMIN;bots.access.overseer.showCommands("ALL")`){
-        message.author.sendMessage("bots.access.overseer.launchProtocal:316,modifiers='12,5,53,30' will spam a server.");
-        setTimeout( () => {
-            message.channel.bulkDelete(2);;
-          }, 500);
-    }
-    else if (message.content == `bots.access.overseer.force_kick:user=`){
-        if(!message.guild.member(bot.user).hasPermission("KICK_MEMBERS")) return console.log(`force_ban by ${message.author} failed. Insufficient permissions.`)
-        let usery = message.mentions.user.first();
-        let reasony = "Force Banned by an **ADMIN** for __innappropriate__ *and/or* __offensive__ content"
-        let generaly = bot.channels.find("name", "general");
-
-        message.guild.member(usery).kick(reason);
-
-        const ybanembed = new Discord.RichEmbed()
-        .setAuthor(`${usery.username} has been __**FORCE KICKED**__ from the server.`, usery.displayAvatarURL)
-        .addField("Kick information", `**Kicked User:** ${user.tag}\n**Reason:** ${reasony}`)
-        .setColor(embedRed);
-        general.send({
-        embed : ybanembed
-        });
-        setTimeout( () => {
-            message.channel.bulkDelete(2);;
-          }, 500);
-    }
-    else if (message.content == `bots.access.overseer.force_ban:user=`){
-        if(!message.guild.member(bot.user).hasPermission("BAN_MEMBERS")) return console.log(`force_ban by ${message.author} failed. Insufficient permissions.`)
-        let userX = message.mentions.user.first();
-        let reasonX = "Force Banned by an **ADMIN** for __innappropriate__ *and/or* __offensive__ content"
-        let general = bot.channels.find("name", "general");
-
-        message.guild.member(userX).ban(reason);
-
-        const Fbanembed = new Discord.RichEmbed()
-        .setAuthor(`${userX.username} has been __**FORCE BANNED**__ from the server.`, userX.displayAvatarURL)
-        .addField("Kick information", `**Banned User:** ${user.tag}\n**Reason:** ${reason}`)
-        .setColor(embedRed);
-        general.send({
-        embed : Fbanembed
-        });
-        setTimeout( () => {
-            message.channel.bulkDelete(2);;
-          }, 500);
-    }
-    else if (message.content == `bots.access.overseer.say:msg=`){
-        let wurdz =  message.content.slice("bots.access.overseer.say:msg=".length);
-
-        message.channel.send(wurdz)
-        setTimeout( () => {
-            message.channel.bulkDelete(2);;
-          }, 500);
-    }
-    else if (message.content.includes == `bots.access.overseer.forceRank=`){
-        let rank = message.mentions.roles.first();
-        let role = member.guild.roles.find(`name`, `${rank}`);
-        message.author.addRole(role);
-
-        setTimeout( () => {
-            message.channel.bulkDelete(2);
-          }, 500);
-    }
-});
 
 //commands
 
@@ -443,37 +347,63 @@ bot.on("message", async(message) => {
             message.guild.member(user1).ban(reason1);
             
             var banembed = new Discord.RichEmbed()
-            .setAuthor(`${user1.username} has been banned from the server.`, user1.displayAvatarURL)
+            .setAuthor(`✅ ${user1.username} has been banned from the server.`, user1.displayAvatarURL)
             .addField("Ban information", `**Banned User:** ${user1.tag}\n**Moderator:** ${message.author.tag}\n**Reason:** ${reason1}`)
             .setColor(embedGreen);
             message.channel.send({
             embed : banembed
             });
             break;
-        
-        case "copycat":
-            if(!message.guild.member(message.author).hasPermission("CHANGE_NICKNAME")) return message.reply("It appears you don't have permission to do this.")
-            if(!message.guild.member(bot.user).hasPermission("CHANGE_NICKNAME")) return message.reply("It appears I don't have permission to do this.")
-            
-            message.guild.member(bot.user).setNickname('კΙбthebraɨɴs');
-            bot.user.setAvatar("316thebrains.jpg");
-            message.channel.sendMessage("Deleting Message...");
-            setTimeout( () => {
-                message.channel.bulkDelete(2);
-            }, 50);
-            break;
 
-        case "copycat_clear":
-            if(!message.guild.member(message.author).hasPermission("CHANGE_NICKNAME")) return message.reply("It appears you don't have permission to do this.")
-            if(!message.guild.member(bot.user).hasPermission("CHANGE_NICKNAME")) return message.reply("It appears I don't have permission to do this.")
-            
-            message.guild.member(bot.user).setNickname('Overseer');
-            bot.user.setAvatar("default.jpg");
-            message.channel.sendMessage("Deleting Message");
-            setTimeout( () => {
-                message.channel.bulkDelete(2);
-            }, 50);
-            break;
+        case "mute":
+          let tomute = message.mentions.users.first() || message.guild.members.get(args[1])
+          let muterole = message.guild.roles.find("name", "muted")
+          let mutetime = args[2]
+
+          if(!message.guild.member(message.author).hasPermission("BAN_MEMBERS")) return message.reply("You don't have permission to do that, do you?")
+          if (!mutetime) mutetime = Infinity
+          if (!tomute) return message.reply("Now I cant mute someone who doesn't exist, now can I?")
+          if (tomute.hasPermission("MANAGE_ROLES")) return message.reply("No I don't think I will mute them.")
+          if (!muterole){
+            try{
+              muterole = await message.guild.createRole({
+                name: "muted",
+                color: "#818386",
+                permissions: []
+              })
+              message.guild.channels.forEach(async (channel, id) => {
+                await channel.overwritePermissions(muterole, {
+                  SEND_MESSAGES: false,
+                  ADD_REACTIONS: false
+                })
+              })
+            }catch(e){
+              console.log(e.stack);
+            }
+          }
+
+          await(tomute.addRole(muterole.id));
+
+          let muteembed = new Discord.RichEmbed()
+          .setAuthor(`✅ ${tomute.username} has been muted.`, tomute.displayAvatarURL)
+          .addField("Mute information", `**Muted User:** ${tomute.username}\n**Moderator:** ${message.author.username}\n**Time:** ${mutetime}`)
+          .setColor(embedGreen)
+          message.channel.send({
+            embed : muteembed
+          })
+
+          setTimeout(function(){
+            tomute.removeRole(muterole.id)
+            let muteembed = new Discord.RichEmbed()
+            .setAuthor(`✅ ${tomute.username} has been unmuted.`, tomute.displayAvatarURL)
+            .addField("UnMute information", `**UnMuted User:** ${tomute.username}\n**Reason:** Mute time expired.`)
+            .setColor(embedGreen)
+          message.channel.send({
+            embed : muteembed
+          })
+          }, ms (mutetime))
+
+          break;
 
         case "wrd":
 
@@ -885,8 +815,9 @@ bot.on("message", async(message) => {
                     }
                 });
                 break;
+                
         default:
-            message.channel.sendMessage("You Appear to have typed an invalid command!");
+            message.channel.send("You Appear to have typed an invalid command!");
             break;
     }
 });
