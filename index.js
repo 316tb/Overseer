@@ -4,11 +4,12 @@ const https = require('https');
 const snekfetch = require("snekfetch");
 const ms = require("ms");
 const prefix = ">";
-const version = "8.1.0";
+const version = "9.0.0";
 const memeCount = 22;
-const token1 = "Mzc5MzQyMjY3NjQ4ODM1NTg0.XhZhxw.W1P5iDIfHDLBVVycw1AWMRLAQxo";
+const token1 = "Mzc5MzQyMjY3NjQ4ODM1NTg0.XicOFg.rW2TFD_aSC7Q66Hi1KaQrM0fql8";
 const game = `${prefix}help || Version - ${version}`;
 const status = "online"/* online, dnd, offline, idle*/
+const muteTimeList = {};
 /*const devList = [
     bot.fetchUser(338825657436078091),
     bot.fetchUser(320666534932643840)
@@ -33,14 +34,17 @@ var help = [(`
 **>dm** DMs a player without using your username. [\`>dm @User#1234 Message Body\`]
 **>ping** Pong!
 **>info** Tells current bot version
-**>kick** Kicks a user from the server [\`>kick @User#1234 Reason\`]
-**>ban** Bans a user from the server [\`>ban @User#1234 Reason\`]
+**>kick** Kicks a user from the server [\`>kick @User#1234 reason\`]
+**>ban** Bans a user from the server [\`>ban @User#1234 reason\`]
 **>warn** Warns a user [\`>warn @User#1234 reason\`]
 **>invite** Invite Overseer to your server
-**>report** Reports a user to the owner [\`>report @User#1234 Reason For Report\`]
-**>help** Displays this message
+**>report** Reports a user to the owner [\`>report @User#1234 reason\`]
+**>help** Displays this message [\`>help\`]
 **>embed** Creates a custom embed [\`>embed title!@description\`]
-**>wrd** do some math using the WolframDelta API [\`>wrd (WolframDelta  syntax)\`]
+**>wrd** Do some math using the WolframDelta API [\`>wrd (WolframDelta  syntax)\`]
+**>mute** Mutes a user from messaging a text channel for a specified amount of time [\`>mute @User#1234 time\`]
+**>unmute** UnMutes a user from messaging a text channel [\`>unmute @User#1234\`]
+**>purge** Deletes the specified number of messages [\`>purge amount\`]
 
 
 `),(`
@@ -265,6 +269,8 @@ bot.on("message", async(message) => {
 
     var args = message.content.substring(prefix.length).split(" ");
 
+    var muteTimer = 0;
+
     switch (args[0].toLowerCase()) {
         case "ping":
             message.channel.send({embed: {
@@ -356,13 +362,15 @@ bot.on("message", async(message) => {
             break;
 
         case "mute":
-          let tomute = message.mentions.users.first() || message.guild.members.get(args[1])
+          let tomute = message.mentions.members.first();
+          let tomuteuser = message.mentions.users.first()
           let muterole = message.guild.roles.find("name", "muted")
           let mutetime = args[2]
 
           if(!message.guild.member(message.author).hasPermission("BAN_MEMBERS")) return message.reply("You don't have permission to do that, do you?")
           if (!mutetime) mutetime = Infinity
           if (!tomute) return message.reply("Now I cant mute someone who doesn't exist, now can I?")
+          if (tomute.roles.find(r => r.name === "muted")) return message.channel.send(`<@${tomute.id}>, You must have really messed up to have someone want to double mute you.`)
           if (tomute.hasPermission("MANAGE_ROLES")) return message.reply("No I don't think I will mute them.")
           if (!muterole){
             try{
@@ -385,23 +393,50 @@ bot.on("message", async(message) => {
           await(tomute.addRole(muterole.id));
 
           let muteembed = new Discord.RichEmbed()
-          .setAuthor(`✅ ${tomute.username} has been muted.`, tomute.displayAvatarURL)
-          .addField("Mute information", `**Muted User:** ${tomute.username}\n**Moderator:** ${message.author.username}\n**Time:** ${mutetime}`)
+          .setAuthor(`${tomuteuser.username} has been muted.`, tomuteuser.displayAvatarURL)
+          .addField("Mute information", `**Muted User:** ${tomuteuser.username}\n**Moderator:** ${message.author.username}\n**Time:** ${mutetime}`)
           .setColor(embedGreen)
           message.channel.send({
             embed : muteembed
           })
 
-          setTimeout(function(){
+          muteTimeList[`${tomute}`] = setTimeout(function(){
             tomute.removeRole(muterole.id)
             let muteembed = new Discord.RichEmbed()
-            .setAuthor(`✅ ${tomute.username} has been unmuted.`, tomute.displayAvatarURL)
-            .addField("UnMute information", `**UnMuted User:** ${tomute.username}\n**Reason:** Mute time expired.`)
+            .setAuthor(`${tomuteuser.username} has been unmuted.`, tomuteuser.displayAvatarURL)
+            .addField("UnMute information", `**UnMuted User:** ${tomuteuser.username}\n**Reason:** Mute time expired.`)
+            .setColor(embedRed)
+            message.channel.send({
+              embed : muteembed
+            })
+          }, ms(mutetime))
+
+          break;
+
+        case "unmute":
+            let tounmute = message.mentions.members.first();
+            let tounmuteuser = message.mentions.users.first()
+  
+            if(!message.guild.member(message.author).hasPermission("BAN_MEMBERS")) return message.reply("You don't have permission to do that, do you?")
+            if (!tounmute) return message.reply("Now I cant unmute someone who doesn't exist, now can I?")
+            if (!tounmute.roles.find("name", "muted")) return message.reply("I may be takling out of my rear here, but it doesn't appear that that user is muted.")
+
+            let unmuteembed = new Discord.RichEmbed()
+            .setAuthor(`${tounmuteuser.username} has been unmuted.`, tounmuteuser.displayAvatarURL)
+            .addField("UnMute information", `**UnMuted User:** ${tounmuteuser.username}\n**Reason:** unmuted by ${message.author.username}`)
             .setColor(embedGreen)
-          message.channel.send({
-            embed : muteembed
-          })
-          }, ms (mutetime))
+
+            try {
+              await(tounmute.removeRole(message.guild.roles.find("name", "muted").id));
+              clearTimeout(muteTimeList[`${tounmute}`]);
+              delete muteTimeList[`${tounmute}`];
+              message.channel.send({
+                  embed : unmuteembed
+              })
+            } catch (e) {
+                console.log(e);
+                message.reply("I may be takling out of my rear here, but it doesn't appear that that user is muted.")
+            }
 
           break;
 
@@ -482,9 +517,19 @@ bot.on("message", async(message) => {
             .addField("**Fun**", help[1])
             .setColor(embedRed);
             member.send({
-            embed : helpEmbed
+            embed : helpEmbedhasPermission
             });
             message.reply("I have DM'd you the list of help commands!")
+            break;
+
+        case "purge":
+            if (!bot.user.hasPermission("MANAGE_MESSAGES")) return message.reply("it appears the mods have not given me permission to do this.")
+            try{
+                message.channel.bulkDelete(args[1] + 1)
+            } catch (e) {
+                console.log(e)
+                message.channel.send("Cant...Delete...")
+            }
             break;
             
         case "slap":
